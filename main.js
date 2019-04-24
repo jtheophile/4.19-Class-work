@@ -6,174 +6,170 @@ class cat {
     }
 }
 
-const cat1 = new cat("Billy", "img/cat1.jpg");
-const cat2 = new cat("Bob", "img/cat2.jpg");
-const cat3 = new cat("Thorton", "img/cat3.jpg");
-const cat4 = new cat("Jelly", "img/cat4.jpg");
-const cat5 = new cat("Bean", "img/cat5.jpg");
 
-// list of all cats
-const cats = [cat1, cat2, cat3, cat4, cat5];
+// model part - the function of the app itself
+var model = {
+    cats: [
+        new cat("Billy", "img/cat1.jpg"),
+        new cat("Bob", "img/cat2.jpg"),
+        new cat("Thorton", "img/cat3.jpg"),
+        new cat("Jelly", "img/cat4.jpg"),
+        new cat("Bean", "img/cat5.jpg"),
+        new cat("Blue", "img/cat6.jpg")
+    ],
+    addCat: function(catName, catPicture) {
+        const cat = {
+            name: catName,
+            picture: catPicture,
+            clicks: 0
+        }
+        model.cats.push(cat);
+    }
+}
+// Middle Part - calculating the info and function that need wo be displayed
+var octopus = {
+    getsCats: function(){
+        return model.cats;
+    },
+    addCat: function(catName, catPicture) {
+     model.addCat(catName, catPicture);
+    }
+}
+// View Part
+var view = { 
+    // init the left cat list
+    init: function() {
+        // Select left column in dom
+        const leftColumn = document.querySelector(".col-4");
+        //Reset left column
+        leftColumn.innerHTML = "";
+
+        // Construct cat list
+        const ul = document.createElement("ul");
+        ul.className = "list-group";
+        for(let cat of octopus.getsCats()) {
+            const li = document.createElement("li");
+            li.className = "listgroup-item";
+            li.textContent = cat.name
+            li.addEventListener("click", ()=>{
+                this.render(cat);
+            })
+            ul.appendChild(li);
+          }
+          leftColumn.appendChild(ul);
+
+          // Add an admin button
+          const adminBtn = document.createElement("button");
+          adminBtn.textContent = "Add New Cat";
+          adminBtn.className = "btn btn-warning mt-3";
+          adminBtn.addEventListener =("click", this.showForm);
+          leftColumn.appendChild(form);
+        },
+        // render the cat on the right
+        render: function(cat) {
+            const rightColumn = document.querySelector(".col-8");
+            // Clear the display area
+            rightColumn.innterHTML = "";
+            // Display the current cat
+            const h1 = document.createElement("h1");
+            h1.textContent = cat.name;
+            rightColumn.appendChild(h1);
+
+            const img = document.createElement("img");
+            img.setAttribute("src", cat.picture);
+            img.setAttribute("alt", cat);
+            img.addEventListener("click", ()=>{
+                cat.click++;
+                h2.textContent = `Clicks: ${cat.click}`;
+            })
+            rightColumn.appendChild(img);
+
+            const h2 = document.createElement("h2");
+            h2.textContent = `Clicks: ${cat.clicks}`;
+            // h2. textContent = 'Clicks: " +cat.clicks;
+            rightColumn.appendChild(h2);
+        },
+        showForm: function() {
+            const form = document.querySelector("form");
+            // reset form
+            form.innerHTML = ""; 
+            // Adding name input - have to create the name and cat pic being added
+            const nameGroup = document.createElement("div");
+            nameGroup.className = "form-group";
+            const nameLabel = document.createElement("label");
+            nameLabel.textContent = "Cat Name"; 
+            nameLabel.setAttribute = ("for", "catName");
+            const nameInput = document.createElement("input");
+            nameInput.classNAme = "form-contol";
+            nameInput.setAttribute("id", "catName");
+            nameGroup.appendChild(nameLabel);
+            nameGroup.appendChild(nameInput);
+            form.appendChild(nameGroup);
+
+            // Adding picture input
+            const imgGroup = document.createElement("div");
+            imgGroup.className = "form-group";
+            const imgLabel = document.createElement("label");
+            imgLabel.textContent = " Cat Picture";
+            imgLabel.setAttribute = ("for", "catPicture");
+            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
+
+
 
 // select left column in dom
 const leftColumn = document.querySelector(".col-4");
 
 //construct cat list
 const ul = document.createElement("ul");
-ul.className = "list-group"
+ul.className = "list-group";
 for(let cat of cats) {
     const li = document.createElement("li");
     li.className = "list-group-item"
     li.textContent = cat.name;
     li.addEventListener("click", ()=>{
-        )
+        displayCat(cat);
+    })
+
     ul.appendChild(li);  
 }
 
 leftColumn.appendChild(ul);
 
+const displayCat = (cat) => {
+    const rightColumn = document.querySelector(".col-8");
+    // clear the display area (reset after it was clicked)
+    rightColumn.innerHTML = "";
+    // display the cat that I clicked
+    const h1 = document.createElement("h1");
+    h1.textContent = cat.name;
+    rightColumn.appendChild(h1);
 
+    const img = document.createElement("img");
+    img.setAttribute("src", cat.picture);
+    img.setAttribute("alt", "cat");
+    img.addEventListener("click", ()=>{
+        cat.clicks++;
+        h2.textContent = `Clicks: ${cat.clicks}`;
+            })
+    rightColumn.appendChild(img);
 
-
-
-
-
-
-
-
-
-
-
-
-
-// const cat1 = {
-// name: "Billy",
-// picture:"img/cat1.jpg",
-// clicks: 0
-
-// const cat2 = {
-//     name: "Bob",
-//     picture:"img/cat2.jpg",
-//     clicks: 0
-// }
-
-// const cat3 = {
-//     name: "Thorton",
-//     picture:"img/cat3.jpg",
-//     clicks: 0
-// }
-
-// const cat4 = {
-//     name: "
-//     Jelly",
-//     picture:"img/cat4.jpg",
-//     clicks: 0
-// }
-
-// const cat5 = {
-//     name: "Bean",
-//     picture:"img/cat5.jpg",
-//     clicks: 0
-// }
-
-
-// const cat1Container = document.querySelector('#cat-1');
-// const cat2Container = document.querySelector('#cat-2');
-// const cat3Container = document.querySelector('#cat-3');
-// const cat4Container = document.querySelector('#cat-4');
-// const cat4Container = document.querySelector('#cat-5');
-
-// //add cat names
-// const cat1Name = document.createElement("h1");
-// cat1Name.textContent= cat1.name;
-// cat1Container.appendChild(cat1Name);
-
-// const cat2Name= document.createElement("h1");
-// cat2Name.textContent = cat2.name;
-// cat2Container.appendChild(cat2Name);
-
-// // add cat images
-// const cat1Image = document.createElement("img");
-// cat1Image.setAttribute("src", cat1.picture);
-// cat1Image.setAttribute("alt", "pic of cat");
-// cat1Container.appendChild(cat1Image);
-
-// const cat2Image = document.createElement("img");
-// cat2Image.setAttribute("src", cat2.picture);
-// cat2Image.setAttribute("alt", "picture of cat");
-// cat2Container.appendChild(cat2Image);
-
-// // add cat click counters
-// const cat1Counter = document.createElement("h1");
-// cat1Counter.textContent = `Clicks: ${cat1.clicks}`;
-// cat1Container.appendChild(cat1Counter);
-
-// const cat2Counter = document.createElement("h1");
-// cat2Counter.textContent = `Clicks: ${cat2.clicks}`;
-// cat2Container.appendChild(cat2Counter);
-
-
-// // add cat image event listeners
-// cat1Image.addEventListener("click", ()=>{
-//     cat1.clicks++;
-//     cat1Counter.textContent = `Clicks: ${cat1.clicks}`;
-// })
-
-// cat2Image.addEventListener("click", ()=>{
-//     cat2.clicks++;
-//     cat2Counter.textContent = `Clicks: ${cat2.clicks}`;
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // // select cat image
-// // const cat1 = document.querySelector("#cat1-img");
-// // // counter for counting clicks
-// // let counter1 = 0;
-
-// // // select the span with id click
-// // const click1 = document.querySelector("#click1");
-
-// // // set counter into click
-// // click1.textContent = counter1;
-
-// // // add click event on cat image
-// // cat1.addEventListener("click1", ()=>{
-// //     counter1++;
-// //     click1.textContent = counter1;
-// // })
-
-
-
-// // // select cat image #2
-// // const cat2 = document.querySelector("#cat2-img");
-// // // counter for counting clicks
-// // let counter2 = 0;
-
-// // // select the span with id click
-// // const click2 = document.querySelector("#click2");
-
-// // // set counter into click
-// // click2.textContent = counter2;
-
-// // // add click event on cat image
-// // cat2.addEventListener("click2", ()=>{
-// //     counter2++;
-// //     click2.textContent = counter2;
-// // })
+    const h2 = document.createElement("h2");
+    h2.textContent = `Clicks: ${cat.clicks}`;
+    rightColumn.appendChild(h2);
+}
